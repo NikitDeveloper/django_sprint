@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
-{% block title %}Подробнее{% endblock %}
+{% block title %}
+  Подробнее
+{% endblock %}
 {% block content %}
-    <div class="container py-5">
       <article>
         <ul>
           <li>
@@ -11,12 +12,11 @@
             Дата: {{ post.date }}
           </li>
           <li>
-            Категория: <a href="not-my-day">not-my-day</a>
+            Категория: <a href="{% url 'blog:category_posts' post.category %}">{{ post.category }}</a>
           </li>
         </ul>         
         <p>
-          {{ post.text }}
+          {{ post.text|linebreaksbr }}
         </p>          
       </article>                
-    </div>
 {% endblock %}

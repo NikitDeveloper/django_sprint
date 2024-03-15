@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from django.http import Http404
+
 
 posts = [
     {
@@ -43,16 +45,20 @@ posts = [
                 укутывал их, чтобы не испортились от дождя.''',
     },
 ]
+id_list = [i['id'] for i in posts]
 
 
 def index(request):
     return render(request, 'blog/index.html', context={'posts': posts[::-1]})
 
 
-def post_detail(request, id):
-    return render(request, 'blog/detail.html', context={'post': posts[id]})
+def post_detail(request, post_id):
+    if post_id not in id_list:
+        raise Http404(f'Page not found (404)\nПост {post_id} не найден.')
+    return render(request, 'blog/detail.html',
+                  context={'post': posts[post_id]})
 
 
 def category_posts(request, category_slug):
-    category = {'category': category_slug}
-    return render(request, 'blog/category.html', context=category)
+    return render(request, 'blog/category.html',
+                  context={'category': category_slug})
