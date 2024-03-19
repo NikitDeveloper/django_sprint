@@ -44,7 +44,7 @@ posts = [
                 укутывал их, чтобы не испортились от дождя.''',
     },
 ]
-id_posts = {i['id']: i['id'] for i in posts}
+posts_by_id = {post['id']: post['id'] for post in posts}
 
 
 def index(request):
@@ -52,7 +52,7 @@ def index(request):
 
 
 def post_detail(request, post_id):
-    if post_id not in id_posts:
+    if post_id not in posts_by_id:
         raise Http404(f'Page not found (404)\nПост {post_id} не найден.')
     return render(request, 'blog/detail.html',
                   context={'post': posts[post_id]})
